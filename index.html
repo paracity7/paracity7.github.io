@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solo Farming</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+            padding: 10px;
+        }
+        .on-top{
+            position: sticky;
+            top:0;
+            background: white;
+            padding-bottom: 10px;
+        }
+        .nav-chap {
+            padding-top: 10px;
+            text-align: center;
+        }
+        #google_translate_element {
+            text-align: center;
+        }
+        #set-new-chap {
+            text-align: center;
+            display: none;
+        }
+    </style>
+
+</head>
+<body style="width: 100%">
+<div class="on-top">
+    <div id="google_translate_element">
+        <button type="button" id="btn_set-new-chap">Set New List</button>
+    </div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'kr'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <div id="set-new-chap">
+        <input type="text" id="new_max_chap" style="width: 30px">
+        <button onclick="setNewList()">Set</button>
+    </div>
+
+    <div class="nav-chap">
+        <button type="button" onclick="getPreviousChap()" id="prev_chap">Previous Chap</button>
+        <select id="chap_list" onchange="readTextFile()"></select>
+        <button type="button" onclick="getNextChap()" id="next_chap">Next Chap</button>
+    </div>
+
+    
+</div>
+
+
+<p id="tbMain" style="white-space: pre-wrap"></p>
+
+<script>
+
+    onLoadPage();
+
+    var buttonToggle = document.getElementById('btn_set-new-chap');
+
+    buttonToggle.onclick = function() {
+        toggleButton();
+    };
+
+    function onLoadPage() {
+        createDropDown();
+        readTextFile();
+        disableButtonPrevNext();
+    }
+
+    function toggleButton() {
+        var div = document.getElementById('set-new-chap');
+        if (div.style.display !== 'none') {
+            div.style.display = 'none';
+        }
+        else {
+            div.style.display = 'block';
+        }
+    }
+    function setNewList() {
+        var newMaxChap = document.getElementById("new_max_chap").value;
+        var oldChap = document.getElementById("chap_list").value;
+        if (newMaxChap) {
+            createDropDown(newMaxChap);
+            if (oldChap <= newMaxChap) {
+                document.getElementById("chap_list").value = oldChap;
+            }
+        }
+    }
+
+    function getPreviousChap() {
+        var currentChapValue = Number(document.getElementById("chap_list").value);
+        disableButtonPrevNext();
+        if (currentChapValue) {
+            var prevChap = (Number(currentChapValue) - 1);
+            prevChap = pad(prevChap, 3);
+            if (prevChap > 0) {
+                changeChap(prevChap);
+                document.getElementById("chap_list").value = prevChap;
+            }
+
+            disableButtonPrevNext();
+        }
+    }
+
+    function getNextChap() {
+        var currentChapValue = Number(document.getElementById("chap_list").value);
+        if (currentChapValue >= 0) {
+            var nextChap = (Number(currentChapValue) + 1);
+            nextChap = pad(nextChap, 3);
+            var maxChap = document.getElementById("chap_list").length -1 ;
+            if (nextChap <= maxChap) {
+                changeChap(nextChap);
+                document.getElementById("chap_list").value = nextChap;
+            }
+            disableButtonPrevNext();
+        }
+    }
+
+    function disableButtonPrevNext() {
+        var currentChapValue = Number(document.getElementById("chap_list").value);
+        var maxChap = document.getElementById("chap_list").length - 1;
+        document.getElementById("prev_chap").disabled = currentChapValue <= 1;
+
+        document.getElementById("next_chap").disabled = currentChapValue >= maxChap;
+    }
+    
+    function createDropDown(currentChap) {
+        var elm = document.getElementById('chap_list'),
+            df = document.createDocumentFragment();
+
+        elm.innerHTML = "";
+        var defaultOp = document.createElement('option');
+        defaultOp.value = "";
+        defaultOp.appendChild(document.createTextNode("Select Chapter"));
+        df.appendChild(defaultOp)
+
+        var maxChap = 322;
+        if (currentChap) {
+            maxChap = currentChap;
+        }
+        for (var i = 1; i <= maxChap; i++) {
+            var fullNum = pad(i, 3);
+            var option = document.createElement('option');
+            option.value = fullNum;
+            option.appendChild(document.createTextNode("Chapter " + fullNum));
+            df.appendChild(option);
+        }
+        elm.appendChild(df);
+    }
+
+    function pad(n, length) {
+        var len = length - (''+n).length;
+        return (len > 0 ? new Array(++len).join('0') : '') + n
+    }
+
+    function changeChap(currentChapValue) {
+        var file = "chap/" + currentChapValue + ".txt";
+        document.getElementById('tbMain').innerHTML = null;
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4) {
+                if (rawFile.status === 200 || rawFile.status == 0) {
+                    document.getElementById('tbMain').innerHTML = rawFile.responseText;
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+
+    function readTextFile() {
+        var currentChapValue = Number(document.getElementById("chap_list").value);
+        disableButtonPrevNext();
+        if (currentChapValue) {
+            changeChap(pad(currentChapValue, 3));
+        }
+    }
+</script>
+
+</body>
+</html>
