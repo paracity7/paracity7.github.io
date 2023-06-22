@@ -76,6 +76,7 @@
     function changeSourceLanguage() {
         var currentSourceLanguage = document.getElementById('change_source_language').value
         setCookie('googtrans', '/' + currentSourceLanguage +'/vi',1);
+        onLoadPage();
     }
 
     function setCookie(key, value, expiry) {
@@ -85,9 +86,8 @@
     }
 
     function googleTranslateElementInit() {
-        setCookie('googtrans', '/en/vi',1);
         new google.translate.TranslateElement({
-            pageLanguage: 'en'
+            pageLanguage: 'kr'
         }, 'google_translate_element');
     }
 
