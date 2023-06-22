@@ -1,3 +1,7 @@
+<?php
+    $dir = "chap/";
+    $file_count = count(glob("{$dir}/*.*"));
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,15 +36,13 @@
 <body style="width: 100%">
 <div class="on-top">
     <div id="google_translate_element">
-        <button type="button" id="btn_set-new-chap">Set New List</button>
+        <select id="change_source_language" onchange="changeSourceLanguage()">
+            <option value="vi">Vietnam</option>
+            <option value="en">English</option>
+            <option value="kr">Korea</option>
+        </select>
     </div>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'kr'}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <div id="set-new-chap">
         <input type="text" id="new_max_chap" style="width: 30px">
@@ -59,15 +61,35 @@
 
 <p id="tbMain" style="white-space: pre-wrap"></p>
 
-<script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+<script type="text/javascript">
     onLoadPage();
 
-    var buttonToggle = document.getElementById('btn_set-new-chap');
+    // var buttonToggle = document.getElementById('btn_set-new-chap');
+    //
+    // buttonToggle.onclick = function() {
+    //     toggleButton();
+    // };
 
-    buttonToggle.onclick = function() {
-        toggleButton();
-    };
+    function changeSourceLanguage() {
+        var currentSourceLanguage = document.getElementById('change_source_language').value
+        setCookie('googtrans', '/' + currentSourceLanguage +'/vi',1);
+    }
+
+    function setCookie(key, value, expiry) {
+        var expires = new Date();
+        expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+        document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+    }
+
+    function googleTranslateElementInit() {
+        setCookie('googtrans', '/en/vi',1);
+        new google.translate.TranslateElement({
+            pageLanguage: 'en'
+        }, 'google_translate_element');
+    }
 
     function onLoadPage() {
         createDropDown();
@@ -142,6 +164,9 @@
         defaultOp.appendChild(document.createTextNode("Select Chapter"));
         df.appendChild(defaultOp)
 
+        var currentSourceLanguage = document.getElementById('change_source_language').value
+        var dir = "chap/" + currentSourceLanguage;
+
         var maxChap = 332;
         if (currentChap) {
             maxChap = currentChap;
@@ -162,7 +187,8 @@
     }
 
     function changeChap(currentChapValue) {
-        var file = "chap/" + currentChapValue + ".txt";
+        var currentSourceLanguage = document.getElementById('change_source_language').value
+        var file = "chap/" + currentSourceLanguage + "/" + currentChapValue + ".txt";
         document.getElementById('tbMain').innerHTML = null;
         var rawFile = new XMLHttpRequest();
         rawFile.open("GET", file, false);
