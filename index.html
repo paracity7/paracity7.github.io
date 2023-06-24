@@ -27,15 +27,15 @@
             display: none;
         }
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body style="width: 100%">
 <div class="on-top">
     <div id="google_translate_element">
         <select id="change_source_language" onchange="changeSourceLanguage()">
-            <option value="vi">Vietnam</option>
-            <option value="en">English</option>
             <option value="kr">Korea</option>
+            <option value="en">English</option>
+            <option value="vi">Vietnam</option>
         </select>
     </div>
 
@@ -82,6 +82,7 @@
     }
 
     function googleTranslateElementInit() {
+        setCookie('googtrans', '/kr/vi', 1);
         new google.translate.TranslateElement({
             pageLanguage: 'kr'
         }, 'google_translate_element');
@@ -163,7 +164,14 @@
         var currentSourceLanguage = document.getElementById('change_source_language').value
         var dir = "chap/" + currentSourceLanguage;
 
-        var maxChap = 332;
+        // $.ajax({
+        //     url: dir,
+        //     success: function (data) {
+        //         var chapCount = $(data).length();
+        //     }
+        // });
+
+        var maxChap = 394;
         if (currentChap) {
             maxChap = currentChap;
         }
