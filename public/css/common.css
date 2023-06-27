@@ -1,0 +1,20 @@
+html {
+    padding: 10px;
+}
+.on-top{
+    position: sticky;
+    top:0;
+    background: white;
+    padding-bottom: 10px;
+}
+.nav-chap {
+    padding-top: 10px;
+    text-align: center;
+}
+#google_translate_element {
+    text-align: center;
+}
+#set-new-chap {
+    text-align: center;
+    display: none;
+}
