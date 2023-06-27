@@ -1,10 +1,3 @@
-function changeSourceLanguage() {
-    var currentSourceLanguage = document.getElementById('change_source_language').value;
-    setCookie('googtrans', '/' + currentSourceLanguage +'/vi',1);
-    readTextFile();
-    createDropDown();
-}
-
 function setCookie(key, value, expiry) {
     var expires = new Date();
     expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
