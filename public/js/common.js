@@ -117,3 +117,10 @@ function readTextFile() {
         changeChap(pad(currentChapValue, 3));
     }
 }
+
+function goToChap() {
+    var chap = Number(document.getElementById("go_to_chap").value);
+    chap = pad(chap, 3);
+    changeChap(chap);
+    document.getElementById("chap_list").value = chap;
+}
