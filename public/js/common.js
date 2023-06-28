@@ -17,16 +17,6 @@ function onLoadPage(maxChap) {
     disableButtonPrevNext();
 }
 
-function toggleButton() {
-    var div = document.getElementById('set-new-chap');
-    if (div.style.display !== 'none') {
-        div.style.display = 'none';
-    }
-    else {
-        div.style.display = 'block';
-    }
-}
-
 function getPreviousChap() {
     var currentChapValue = Number(document.getElementById("chap_list").value);
     disableButtonPrevNext();
@@ -105,6 +95,8 @@ function changeChap(currentChapValue) {
             }
         }
     }
+    document.getElementById("chap_list").value = currentChapValue;
+    document.getElementById("go_to_chap").value = currentChapValue;
     document.getElementById('title-chap').innerHTML = "Solo Farming - Chap " + currentChapValue;
     window.scrollTo({top: 0});
     rawFile.send(null);
@@ -122,5 +114,5 @@ function goToChap() {
     var chap = Number(document.getElementById("go_to_chap").value);
     chap = pad(chap, 3);
     changeChap(chap);
-    document.getElementById("chap_list").value = chap;
+    disableButtonPrevNext();
 }
