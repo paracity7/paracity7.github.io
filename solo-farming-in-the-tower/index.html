@@ -38,10 +38,10 @@
 <script type="text/javascript">
     var maxChapKr = 414;
     var maxChapEn = 87;
+    var maxChap = maxChapKr;
 
     onLoadPage(maxChap);
     function changeSourceLanguage() {
-        var maxChap = maxChapKr;
         var currentSourceLanguage = document.getElementById('change_source_language').value;
         if (currentSourceLanguage == "en") {
             maxChap = maxChapEn;
