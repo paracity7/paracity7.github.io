@@ -5,9 +5,10 @@ function setCookie(key, value, expiry) {
 }
 
 function googleTranslateElementInit() {
-    setCookie('googtrans', '/kr/vi', 1);
+    var lang = window.navigator.language;
+    setCookie('googtrans', '/' + lang + '/vi', 1);
     new google.translate.TranslateElement({
-        pageLanguage: 'kr'
+        pageLanguage: lang
     }, 'google_translate_element');
 }
 
