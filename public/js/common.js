@@ -8,7 +8,7 @@ function googleTranslateElementInit() {
     setCookie('googtrans', '/kr/vi', 1);
     new google.translate.TranslateElement({
         pageLanguage: 'kr',
-        includedLanguages: 'vi'
+        includedLanguages: 'en,vi'
     }, 'google_translate_element');
 }
 

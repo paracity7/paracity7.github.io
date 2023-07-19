@@ -43,8 +43,8 @@
     function changeSourceLanguage() {
         var currentSourceLanguage = document.getElementById('change_source_language').value;
         setCookie('googtrans', '/' + currentSourceLanguage +'/vi',1);
-        readTextFile();
         createDropDown(maxChap);
+        readTextFile();
     }
 </script>
 
