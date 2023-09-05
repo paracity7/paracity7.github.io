@@ -14,3 +14,7 @@ KR: Chap 430-433 https://agit571.xyz/novel/list/25323
 //2023/08/24
 KR: Chap 434-456 https://agit575.xyz/novel/list/25323
 EN: Chap 098-127 https://hangukhub.com/series/solo-farming-in-the-tower/
+
+
+//2023/09/05
+KR: Chap 457-470 https://agit577.xyz/novel/list/25323
