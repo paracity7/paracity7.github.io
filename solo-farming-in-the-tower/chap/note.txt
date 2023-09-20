@@ -18,3 +18,6 @@ EN: Chap 098-127 https://hangukhub.com/series/solo-farming-in-the-tower/
 
 //2023/09/05
 KR: Chap 457-470 https://agit577.xyz/novel/list/25323
+
+//2023/09/20
+KR: Chap 471-485 https://agit579.xyz/novel/list/25323
