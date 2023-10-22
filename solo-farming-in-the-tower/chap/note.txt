@@ -21,3 +21,6 @@ KR: Chap 457-470 https://agit577.xyz/novel/list/25323
 
 //2023/09/20
 KR: Chap 471-485 https://agit579.xyz/novel/list/25323
+
+//2023/10/22
+KR: Chap 486-529 https://raw.gatewayroleplay.org/
