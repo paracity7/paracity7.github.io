@@ -24,3 +24,6 @@ KR: Chap 471-485 https://agit579.xyz/novel/list/25323
 
 //2023/10/22
 KR: Chap 486-529 https://raw.gatewayroleplay.org/
+
+//2023/10/27
+KR: Update chap 486-516 (501 not update) https://agit613.xyz/novel/list/25323
