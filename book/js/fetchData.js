@@ -8,21 +8,16 @@ fetch(sheet_csv)
         arr2tbl(parseData(data));
     });
 
-function filterItems(needle, heystack) {
-    var query = needle.toLowerCase();
-    return heystack.filter(function(item) {
-        return item.toLowerCase().indexOf(query) >= 0;
-    })
-}
-
 function search(nameKey){
     document.querySelector(idTable).innerHTML= "";
-    let data = dataFromGoogleSheets;
+    const data = dataFromGoogleSheets;
     if (data !== "") {
         let myArray = parseData(data);
         let searchData = myArray.filter(obj => {
-            return Object.values(obj).some(val =>{
-                return val.includes(nameKey)
+            return Object.values(obj).some((val, key) =>{
+                if (key === keyOfBookName) { // key of book name
+                    return val.includes(nameKey)
+                }
             })
         });
         arr2tbl(searchData);
@@ -30,46 +25,50 @@ function search(nameKey){
 }
 
 function arr2tbl(array){
-    let tableString="<tr>"
-    for(let column in array[0]){
-        switch (column) {
-            case urlEditResponse:
-                tableString+=`<th>Edit</th>`
-                break;
-            case bookName:
-            case volume:
-            case bookShelf:
-                tableString+=`<th>${column}</th>`
-                break;
-            default:
-                break;
-        }
-    }
-    tableString+="</tr>"
-    console.log(typeof array);
-    array.forEach(element => {
-        tableString+="<tr>"
-        for(let prop in element){
-            switch (prop) {
+    let tableString = "<tr>"
+    if (array.length === 0) {
+        tableString += "Không có kết quả</tr>"
+    } else {
+        for (let column in array[0]) {
+            switch (column) {
                 case urlEditResponse:
-                    if (element[prop] !== "") {
-                        tableString+=`<td><a href="${element[prop]}" target="_blank">Edit</a></td>`
-                    } else {
-                        tableString+=`<td>Edit</td>`
-                    }
+                    tableString += `<th>Edit</th>`
                     break;
                 case bookName:
                 case volume:
                 case bookShelf:
-                    tableString+=`<td>${element[prop]}</td>`
+                    tableString += `<th>${column}</th>`
                     break;
                 default:
                     break;
             }
         }
-        tableString+="</tr>"
-    });
-    document.querySelector(idTable).innerHTML=tableString;
+        tableString += "</tr>"
+
+        array.forEach(element => {
+            tableString += "<tr>"
+            for (let prop in element) {
+                switch (prop) {
+                    case urlEditResponse:
+                        if (element[prop] !== "") {
+                            tableString += `<td><a href="${element[prop]}" target="_blank">Edit</a></td>`
+                        } else {
+                            tableString += `<td>Edit</td>`
+                        }
+                        break;
+                    case bookName:
+                    case volume:
+                    case bookShelf:
+                        tableString += `<td>${element[prop]}</td>`
+                        break;
+                    default:
+                        break;
+                }
+            }
+            tableString += "</tr>"
+        });
+    }
+    document.querySelector(idTable).innerHTML = tableString;
 }
 
 //parse the data

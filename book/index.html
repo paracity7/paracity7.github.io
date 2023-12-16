@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Truyện của Kỳ</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="chart">
     <h2>Danh sách truyện</h2>
-    Search: <input type="text" id="search_book">
-    <table id="tb"></table>
+
+    <div class="col-lg-12">
+        Search: <input type="text" id="search_book">
+        <div class="table-responsive">
+            <table id="tb" class="table table-bordered"></table>
+        </div>
+    </div>
 
 </div>
 <script src="js/papaparse.min.js"></script>
