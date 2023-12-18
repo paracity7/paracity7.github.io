@@ -25,9 +25,9 @@ function search(nameKey){
 }
 
 function arr2tbl(array){
-    let tableString = "<tr>"
+    let tableString = "<thead class=\"thead-dark\"><tr>"
     if (array.length === 0) {
-        tableString += "Không có kết quả</tr>"
+        tableString += "Không có kết quả</tr></thead>"
     } else {
         for (let column in array[0]) {
             switch (column) {
@@ -43,7 +43,7 @@ function arr2tbl(array){
                     break;
             }
         }
-        tableString += "</tr>"
+        tableString += "</tr></thead><tbody>"
 
         array.forEach(element => {
             tableString += "<tr>"
@@ -65,7 +65,7 @@ function arr2tbl(array){
                         break;
                 }
             }
-            tableString += "</tr>"
+            tableString += "</tr></tbody>"
         });
     }
     document.querySelector(idTable).innerHTML = tableString;
