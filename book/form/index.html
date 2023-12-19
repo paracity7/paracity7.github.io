@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html  lang="en">
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+<body>
+    <div id="textUrl" style="padding: 20px; margin-top: 50px"></div>
+
+</body>
+<script>
+    const url = "https://docs.google.com/forms/d/e/1FAIpQLSe1dO6tsyPO0fftOjuT87bNtRt_JZrqlDEzFL75ioEdHWBFpQ/viewform"
+    readTextFile();
+
+    function readTextFile()
+    {
+        var file = "bookName.txt";
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function ()
+        {
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status === 0)
+                {
+                    var allText = rawFile.responseText;
+                    // By lines
+                    var lines = allText.split('\r\n');
+                    var newUrl = "";
+                    var newName = "";
+                    var newTextDiv = "";
+                    for (var line = 0; line < lines.length; line++) {
+                        newName = lines[line].trim();
+                        newUrl = generalUrl(`${newName}`);
+                        newTextDiv += "<div><a target='_blank' href=" + newUrl + ">" + newName + "</a></div>"
+                    }
+                    document.getElementById("textUrl").innerHTML = newTextDiv;
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+
+    function generalUrl(bookName) {
+        const query = {
+            "usp": "pp_url",
+            "entry.427394955": bookName,
+            "entry.1800029156": `Tập 01`
+        }
+
+        String.prototype.addQuery = function (obj) {
+            return this + Object.keys(obj).reduce(function (p, e, i) {
+                return p + (i === 0 ? "?" : "&") +
+                    (Array.isArray(obj[e]) ? obj[e].reduce(function (str, f, j) {
+                        return str + e + "=" + encodeURIComponent(f) + (j !== obj[e].length - 1 ? "&" : "")
+                    }, "") : e + "=" + encodeURIComponent(obj[e]));
+            }, "");
+        }
+        return url.addQuery(query);
+    }
+
+</script>
+</html>
