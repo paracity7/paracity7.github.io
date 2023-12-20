@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html  lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <title>Danh sách form</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     </head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
 <body>
     <div id="textUrl" style="padding: 20px; margin-top: 50px"></div>
 
@@ -15,7 +11,7 @@
 
     function readTextFile()
     {
-        var file = "bookName.txt";
+        var file = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTNSaJhJaGSoQjXlSLweBuGGK7C3G8Nenu4U4zJEX6vx_DyXJbCH3yIbw8HYPyHi8Pp_uo7LDKfe0dj/pub?gid=0&single=true&output=csv&range=A2:A";
         var rawFile = new XMLHttpRequest();
         rawFile.open("GET", file, false);
         rawFile.onreadystatechange = function ()
