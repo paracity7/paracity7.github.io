@@ -4,16 +4,31 @@
     <meta charset="UTF-8">
     <title>Danh sách form </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="textUrl" style="padding: 20px; margin-top: 50px"></div>
-
+    <div class="col-lg-12">
+        <div style="margin-top:20px">
+            Tìm theo tên: <input type="text" id="search_book">
+        </div>
+        <div id="textUrl" style="padding: 20px"></div>
+    </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const url = "https://docs.google.com/forms/d/e/1FAIpQLSe1dO6tsyPO0fftOjuT87bNtRt_JZrqlDEzFL75ioEdHWBFpQ/viewform"
     readTextFile();
 
-    function readTextFile()
+    var timeout = null;
+    var idSearch = "#search_book";
+    $(idSearch).on('keyup', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            readTextFile($(idSearch).val());
+        }, 1000);
+    });
+
+    function readTextFile(nameKey)
     {
         var file = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTNSaJhJaGSoQjXlSLweBuGGK7C3G8Nenu4U4zJEX6vx_DyXJbCH3yIbw8HYPyHi8Pp_uo7LDKfe0dj/pub?gid=0&single=true&output=csv&range=A2:A";
         var rawFile = new XMLHttpRequest();
@@ -27,19 +42,33 @@
                     var allText = rawFile.responseText;
                     // By lines
                     var lines = allText.split('\r\n');
-                    var newUrl = "";
-                    var newName = "";
-                    var newTextDiv = "";
-                    for (var line = 0; line < lines.length; line++) {
-                        newName = lines[line].trim();
-                        newUrl = generalUrl(`${newName}`);
-                        newTextDiv += "<div><a target='_blank' href=" + newUrl + ">" + newName + "</a></div>"
+                    if (typeof nameKey !== 'undefined') {
+                        let newLines = lines.filter(obj => {
+                            return obj.includes(nameKey);
+                        });
+                        generalData(newLines);
+                    } else {
+                        generalData(lines);
                     }
-                    document.getElementById("textUrl").innerHTML = newTextDiv;
                 }
             }
         }
         rawFile.send(null);
+    }
+
+    function generalData(lines) {
+        var newUrl = "";
+        var newName = "";
+        var newTextDiv = "";
+        if (lines.length === 0) {
+            newTextDiv += "Không có kết quả";
+        }
+        for (var line = 0; line < lines.length; line++) {
+            newName = lines[line].trim();
+            newUrl = generalUrl(`${newName}`);
+            newTextDiv += "<div><a target='_blank' href=" + newUrl + ">" + newName + "</a></div>"
+        }
+        document.getElementById("textUrl").innerHTML = newTextDiv;
     }
 
     function generalUrl(bookName) {
