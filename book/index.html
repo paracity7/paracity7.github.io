@@ -34,14 +34,14 @@
     $(idSearchBook).on('keyup', function() {
         clearTimeout(timeout);
         timeout = setTimeout(function() {
-            search($(idSearchBook).val());
+            search($(idSearchBook).val(), keyOfBookName);
         }, 1000);
     });
 
     $(idSearchBookShelf).on('keyup', function() {
         clearTimeout(timeout);
         timeout = setTimeout(function() {
-            search($(idSearchBookShelf).val());
+            search($(idSearchBookShelf).val(), keyOfBookShelf);
         }, 1000);
     });
 </script>

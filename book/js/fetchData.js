@@ -8,14 +8,14 @@ fetch(sheet_csv)
         arr2tbl(parseData(data));
     });
 
-function search(nameKey){
+function search(nameKey, keyOfName){
     document.querySelector(idTable).innerHTML= "";
     const data = dataFromGoogleSheets;
     if (data !== "") {
         let myArray = parseData(data);
         let searchData = myArray.filter(obj => {
             return Object.values(obj).some((val, key) =>{
-                if (key === keyOfBookName) { // key of book name
+                if (key === keyOfName) { // key of book name
                     return val.includes(nameKey)
                 }
             })
