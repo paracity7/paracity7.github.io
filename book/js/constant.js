@@ -12,4 +12,5 @@ const sheet_csv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTILtjmVWQQuf
 
 const keyOfBookName = 1;
 const idTable = "#tb";
-const idSearch = "#search_book"
+const idSearchBook = "#search_book"
+const idSearchBookShelf = "#search_book_shelf"
