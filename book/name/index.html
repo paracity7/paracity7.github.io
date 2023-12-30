@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa tên sách</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="col-lg-12">
+        <div style="margin-top:20px">
+            Tìm theo tên: <input type="text" id="search_book">
+        </div>
+        <div id="textUrl" style="padding: 20px"></div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const url = "https://docs.google.com/forms/d/e/1FAIpQLSdU5kOIkXZ4RBgodFWrfWY3va0GVvEKH0CJV1oYt1kG1jZ3Lg/viewform"
+    readTextFile();
+
+    var timeout = null;
+    var idSearch = "#search_book";
+    $(idSearch).on('keyup', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            readTextFile($(idSearch).val());
+        }, 1000);
+    });
+
+    function readTextFile(nameKey)
+    {
+        var file = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTNSaJhJaGSoQjXlSLweBuGGK7C3G8Nenu4U4zJEX6vx_DyXJbCH3yIbw8HYPyHi8Pp_uo7LDKfe0dj/pub?gid=1278920737&single=true&output=csv&range=B2:D";
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function ()
+        {
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status === 0)
+                {
+                    var allText = rawFile.responseText;
+                    // By lines
+                    var lines = allText.split('\r\n');
+                    if (typeof nameKey !== 'undefined') {
+                        let newLines = lines.filter(obj => {
+                            var newArr = obj.split(',');
+                            for (var key = 0; newArr.length; key++ ) {
+                                if (key === 0) {
+                                    return newArr[key].includes(nameKey);
+                                }
+                            }
+                        });
+                        generalData(newLines);
+                    } else {
+                        generalData(lines);
+                    }
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+
+    function generalData(lines) {
+        var newUrl = "";
+        var newName = "";
+        var newTextDiv = "";
+        if (lines.length === 0) {
+            newTextDiv += "Không có kết quả";
+        }
+        for (var line = 0; line < lines.length; line++) {
+            var newLines = lines[line].split(',');
+            newName = newLines[0];
+            newUrl = newLines[2];
+             newTextDiv += "<div><a target='_blank' href=" + newUrl + ">" + newName + "</a></div>"
+        }
+        document.getElementById("textUrl").innerHTML = newTextDiv;
+    }
+
+    function generalUrl(bookName) {
+        const query = {
+            "usp": "pp_url",
+            "entry.1898221098": bookName
+        }
+
+        String.prototype.addQuery = function (obj) {
+            return this + Object.keys(obj).reduce(function (p, e, i) {
+                return p + (i === 0 ? "?" : "&") +
+                    (Array.isArray(obj[e]) ? obj[e].reduce(function (str, f, j) {
+                        return str + e + "=" + encodeURIComponent(f) + (j !== obj[e].length - 1 ? "&" : "")
+                    }, "") : e + "=" + encodeURIComponent(obj[e]));
+            }, "");
+        }
+        return url.addQuery(query);
+    }
+
+</script>
+</html>
