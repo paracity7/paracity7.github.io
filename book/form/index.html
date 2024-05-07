@@ -17,6 +17,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="bookList.js"></script>
 <script>
+    var giaTien = "";
+    var giaMua = "";
     const url = "https://docs.google.com/forms/d/e/1FAIpQLSe1dO6tsyPO0fftOjuT87bNtRt_JZrqlDEzFL75ioEdHWBFpQ/viewform"
     readTextFile();
 
@@ -73,8 +75,6 @@
     }
 
     function generalUrl(bookName) {
-        var giaTien = "";
-        var giaMua = "";
         var ghiChu = "Pre Order NS Phương Thu Tháng 0";
         
         defaultValue(bookName);
