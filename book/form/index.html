@@ -15,6 +15,7 @@
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="bookList.js"></script>
 <script>
     const url = "https://docs.google.com/forms/d/e/1FAIpQLSe1dO6tsyPO0fftOjuT87bNtRt_JZrqlDEzFL75ioEdHWBFpQ/viewform"
     readTextFile();
@@ -75,10 +76,8 @@
         var giaTien = "";
         var giaMua = "";
         var ghiChu = "Pre Order NS Phương Thu Tháng 0";
-        console.log(bookName);
+        
         defaultValue(bookName);
-
-
         var todayDate = new Date();
         ghiChu = ghiChu + todayDate.getMonth(); // get last month
 
@@ -101,6 +100,61 @@
             }, "");
         }
         return url.addQuery(query);
+    }
+
+    //
+    function defaultValue(bookName){
+        if (book25k.includes(bookName)) {
+            giaTien = `25.000đ`;
+            giaMua = `22.500đ`
+        }
+
+        if (book30k.includes(bookName)) {
+            giaTien = `30.000đ`;
+            giaMua = `27.000đ`
+        }
+
+        if (book35k.includes(bookName)) {
+            giaTien = `35.000đ`;
+            giaMua = `31.500đ`
+        }
+
+        if (book40k.includes(bookName)) {
+            giaTien = `40.000đ`;
+            giaMua = `36.000đ`
+        }
+
+        if (book45k.includes(bookName)) {
+            giaTien = `45.000đ`;
+            giaMua = `40.500đ`
+        }
+
+        if (book48k.includes(bookName)) {
+            giaTien = `48.000đ`;
+            giaMua = `43.200đ`
+        }
+
+        if (book50k.includes(bookName)) {
+            giaTien = `50.000đ`;
+            giaMua = `45.000đ`
+        }
+
+        if (book75k.includes(bookName)) {
+            giaTien = `75.000đ`;
+            giaMua = `67.500đ`
+        }
+
+        if (book88k.includes(bookName)) {
+            giaTien = `88.000đ`;
+            giaMua = `79.200đ`
+        }
+
+
+        if (book95k.includes(bookName)) {
+            giaTien = `95.000đ`;
+            giaMua = `85.500đ`
+        }
+
     }
 
 </script>
