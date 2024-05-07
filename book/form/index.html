@@ -72,10 +72,24 @@
     }
 
     function generalUrl(bookName) {
+        var giaTien = "";
+        var giaMua = "";
+        var ghiChu = "Pre Order NS Phương Thu Tháng 0";
+        console.log(bookName);
+        defaultValue(bookName);
+
+
+        var todayDate = new Date();
+        ghiChu = ghiChu + todayDate.getMonth(); // get last month
+
         const query = {
             "usp": "pp_url",
-            "entry.427394955": bookName,
-            "entry.1800029156": `Tập 01`
+            "entry.427394955": bookName, //Tên sách
+            "entry.1800029156": `Tập 01`, //Tên tập 
+            //"entry.1874078093": `Chưa xác định`, //Giá sách
+            "entry.1053865789": `40.000đ`, //Giá tiền
+            "entry.2119397446": `36.000đ`, //Giá mua
+            "entry.1391958875": ghiChu //Ghi chú
         }
 
         String.prototype.addQuery = function (obj) {
