@@ -31,9 +31,9 @@ function arr2tbl(array){
     } else {
         for (let column in array[0]) {
             switch (column) {
-                case urlEditResponse:
-                    tableString += `<th>Edit</th>`
-                    break;
+                //case urlEditResponse:
+                    //tableString += `<th>Edit</th>`
+                    //break;
                 case bookName:
                 case volume:
                 case bookShelf:
@@ -49,13 +49,13 @@ function arr2tbl(array){
             tableString += "<tr>"
             for (let prop in element) {
                 switch (prop) {
-                    case urlEditResponse:
-                        if (element[prop] !== "") {
-                            tableString += `<td><a href="${element[prop]}" target="_blank">Edit</a></td>`
-                        } else {
-                            tableString += `<td>Edit</td>`
-                        }
-                        break;
+                    //case urlEditResponse:
+                        //if (element[prop] !== "") {
+                            //tableString += `<td><a href="${element[prop]}" target="_blank">Edit</a></td>`
+                        //} else {
+                            //tableString += `<td>Edit</td>`
+                        //}
+                        //break;
                     case bookName:
                     case volume:
                     case bookShelf:
