@@ -17,8 +17,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="bookList.js"></script>
 <script>
-    var giaTien = "";
-    var giaMua = "";
     const url = "https://docs.google.com/forms/d/e/1FAIpQLSe1dO6tsyPO0fftOjuT87bNtRt_JZrqlDEzFL75ioEdHWBFpQ/viewform"
     readTextFile();
 
@@ -75,11 +73,16 @@
     }
 
     function generalUrl(bookName) {
-        var ghiChu = "Pre Order NS Phương Thu Tháng 0";
-        
-        defaultValue(bookName);
         var todayDate = new Date();
-        ghiChu = ghiChu + todayDate.getMonth(); // get last month
+        var ghiChu = "Pre Order NS Phương Thu Tháng " + todayDate.getMonth();
+        var giaTien = "";
+        var giaMua = "";
+
+        [giaTien, giaMua] = defaultValue(bookName);
+        // if giaTien or giaMua empty then set ghiChu empty
+        if (giaTien == "" || giaMua == "") {
+            ghiChu = "";
+        }
 
         const query = {
             "usp": "pp_url",
@@ -104,6 +107,9 @@
 
     //
     function defaultValue(bookName){
+        var giaTien = "";
+        var giaMua = "";
+
         if (book25k.includes(bookName)) {
             giaTien = `25.000đ`;
             giaMua = `22.500đ`
@@ -154,7 +160,7 @@
             giaTien = `95.000đ`;
             giaMua = `85.500đ`
         }
-
+        return [giaTien, giaMua];
     }
 
 </script>
